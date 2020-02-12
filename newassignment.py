@@ -38,18 +38,19 @@ def callback():
 @app.errorhandler(500)
 def server_error(e):
     logging.exception('An error occurred during a request. %s', e)
-    return "An internal error occured", 500
+    return "An internal error occurs", 500
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
-        usage='Usage: python ' + __file__ + ' [--port <port>] [--help]'
+        usage='Usage: python ' + __file__ + ' [--debug] [--help]'
     )
-    arg_parser.add_argument('-d', '--debug', default=True, help='debug')
+    arg_parser.add_argument('-p', '--production', action='store_true', help='Indicate this is production, not debug')
     options = arg_parser.parse_args()
 
-    if options.debug:
-        app.run(host='0.0.0.0', debug=True, port=heroku_port)
+    if options.production:
+        app.run(host='0.0.0.0', debug=False, port=heroku_port)
     else:
-        app.run(host='127.0.0.1', debug=False)
+        app.run(host='127.0.0.1', debug=True)
+        
         
 

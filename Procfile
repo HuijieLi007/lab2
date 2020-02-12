@@ -1,1 +1,1 @@
-web: python newassignment.py
+web: python newassignment.py -p
